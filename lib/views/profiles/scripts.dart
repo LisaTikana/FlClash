@@ -36,13 +36,10 @@ class _ScriptsViewState extends ConsumerState<ScriptsView> {
   Widget _buildContent() {
     return Consumer(
       builder: (_, ref, _) {
-        final vm2 = ref.watch(
-          scriptStateProvider.select(
-            (state) => VM2(a: state.currentId, b: state.scripts),
-          ),
-        );
-        final currentId = vm2.a;
-        final scripts = vm2.b;
+        final profileId = ref.watch(currentProfileIdProvider);
+        final scriptProps = ref.watch(scriptStateProvider);
+        final currentId = scriptProps.getCurrentId(profileId);
+        final scripts = scriptProps.scripts;
         if (scripts.isEmpty) {
           return NullStatus(
             label: appLocalizations.nullTip(appLocalizations.script),

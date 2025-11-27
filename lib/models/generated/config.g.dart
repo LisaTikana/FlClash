@@ -308,6 +308,10 @@ const _$DynamicSchemeVariantEnumMap = {
 
 _ScriptProps _$ScriptPropsFromJson(Map<String, dynamic> json) => _ScriptProps(
   currentId: json['currentId'] as String?,
+  profileBindings: (json['profileBindings'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ) ??
+      const {},
   scripts:
       (json['scripts'] as List<dynamic>?)
           ?.map((e) => Script.fromJson(e as Map<String, dynamic>))
@@ -318,6 +322,7 @@ _ScriptProps _$ScriptPropsFromJson(Map<String, dynamic> json) => _ScriptProps(
 Map<String, dynamic> _$ScriptPropsToJson(_ScriptProps instance) =>
     <String, dynamic>{
       'currentId': instance.currentId,
+      'profileBindings': instance.profileBindings,
       'scripts': instance.scripts,
     };
 

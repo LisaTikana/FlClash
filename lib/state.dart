@@ -383,7 +383,7 @@ class GlobalState {
     }
     final profileId = profile.id;
     final configMap = await getProfileConfig(profileId);
-    final rawConfig = await handleEvaluate(configMap);
+    final rawConfig = await handleEvaluate(configMap, profileId: profileId);
     final realPatchConfig = patchConfig.copyWith(
       tun: patchConfig.tun.getRealTun(config.networkProps.routeMode),
     );
@@ -503,7 +503,8 @@ class GlobalState {
     rawConfig.remove('rules');
 
     final overrideData = profile.overrideData;
-    if (overrideData.enable && config.scriptProps.currentScript == null) {
+    if (overrideData.enable &&
+        config.scriptProps.currentScriptForProfile(profileId) == null) {
       if (overrideData.rule.type == OverrideRuleType.override) {
         rules = overrideData.runningRule;
       } else {
@@ -522,9 +523,11 @@ class GlobalState {
   }
 
   Future<Map<String, dynamic>> handleEvaluate(
-    Map<String, dynamic> config,
-  ) async {
-    final currentScript = globalState.config.scriptProps.currentScript;
+    Map<String, dynamic> config, {
+    String? profileId,
+  }) async {
+    final currentScript =
+        globalState.config.scriptProps.currentScriptForProfile(profileId);
     if (currentScript == null) {
       return config;
     }
