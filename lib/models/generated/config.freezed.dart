@@ -2332,7 +2332,7 @@ $TextScaleCopyWith<$Res> get textScale {
 /// @nodoc
 mixin _$ScriptProps {
 
- String? get currentId; List<Script> get scripts;
+ String? get currentId; List<Script> get scripts; Map<String, String> get profileBindings;
 /// Create a copy of ScriptProps
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2346,15 +2346,15 @@ $ScriptPropsCopyWith<ScriptProps> get copyWith => _$ScriptPropsCopyWithImpl<Scri
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is ScriptProps&&(identical(other.currentId, currentId) || other.currentId == currentId)&&const DeepCollectionEquality().equals(other.scripts, scripts));
-}
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScriptProps&&(identical(other.currentId, currentId) || other.currentId == currentId)&&const DeepCollectionEquality().equals(other.scripts, scripts)&&const DeepCollectionEquality().equals(other.profileBindings, profileBindings));
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,currentId,const DeepCollectionEquality().hash(scripts));
+int get hashCode => Object.hash(runtimeType,currentId,const DeepCollectionEquality().hash(scripts),const DeepCollectionEquality().hash(profileBindings));
 
 @override
 String toString() {
-  return 'ScriptProps(currentId: $currentId, scripts: $scripts)';
+  return 'ScriptProps(currentId: $currentId, scripts: $scripts, profileBindings: $profileBindings)';
 }
 
 
@@ -2365,7 +2365,7 @@ abstract mixin class $ScriptPropsCopyWith<$Res>  {
   factory $ScriptPropsCopyWith(ScriptProps value, $Res Function(ScriptProps) _then) = _$ScriptPropsCopyWithImpl;
 @useResult
 $Res call({
- String? currentId, List<Script> scripts
+ String? currentId, List<Script> scripts, Map<String, String> profileBindings
 });
 
 
@@ -2382,11 +2382,12 @@ class _$ScriptPropsCopyWithImpl<$Res>
 
 /// Create a copy of ScriptProps
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? currentId = freezed,Object? scripts = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? currentId = freezed,Object? scripts = null,Object? profileBindings = null,}) {
   return _then(_self.copyWith(
 currentId: freezed == currentId ? _self.currentId : currentId // ignore: cast_nullable_to_non_nullable
 as String?,scripts: null == scripts ? _self.scripts : scripts // ignore: cast_nullable_to_non_nullable
-as List<Script>,
+as List<Script>,profileBindings: null == profileBindings ? _self.profileBindings : profileBindings // ignore: cast_nullable_to_non_nullable
+as Map<String, String>,
   ));
 }
 
@@ -2472,10 +2473,10 @@ return $default(_that);case _:
 /// ```
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? currentId,  List<Script> scripts)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? currentId,  List<Script> scripts,  Map<String, String> profileBindings)?  $default,{required TResult orElse(),}) {final _that = this;
 case _ScriptProps() when $default != null:
 return $default(_that.currentId,_that.scripts);case _:
-  return orElse();
+return $default(_that.currentId,_that.scripts,_that.profileBindings);case _:
 
 }
 }
@@ -2493,10 +2494,10 @@ return $default(_that.currentId,_that.scripts);case _:
 /// ```
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? currentId,  List<Script> scripts)  $default,) {final _that = this;
-switch (_that) {
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? currentId,  List<Script> scripts,  Map<String, String> profileBindings)  $default,) {final _that = this;
 case _ScriptProps():
 return $default(_that.currentId,_that.scripts);case _:
-  throw StateError('Unexpected subclass');
+return $default(_that.currentId,_that.scripts,_that.profileBindings);case _:
 
 }
 }
@@ -2513,10 +2514,10 @@ return $default(_that.currentId,_that.scripts);case _:
 /// ```
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? currentId,  List<Script> scripts)?  $default,) {final _that = this;
-switch (_that) {
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? currentId,  List<Script> scripts,  Map<String, String> profileBindings)?  $default,) {final _that = this;
 case _ScriptProps() when $default != null:
 return $default(_that.currentId,_that.scripts);case _:
-  return null;
+return $default(_that.currentId,_that.scripts,_that.profileBindings);case _:
 
 }
 }
@@ -2527,7 +2528,7 @@ return $default(_that.currentId,_that.scripts);case _:
 @JsonSerializable()
 
 class _ScriptProps implements ScriptProps {
-  const _ScriptProps({this.currentId, final  List<Script> scripts = const []}): _scripts = scripts;
+  const _ScriptProps({this.currentId, final  List<Script> scripts = const [], final  Map<String, String> profileBindings = const {}}): _scripts = scripts,_profileBindings = profileBindings;
   factory _ScriptProps.fromJson(Map<String, dynamic> json) => _$ScriptPropsFromJson(json);
 
 @override final  String? currentId;
@@ -2536,6 +2537,13 @@ class _ScriptProps implements ScriptProps {
   if (_scripts is EqualUnmodifiableListView) return _scripts;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_scripts);
+}
+
+ final  Map<String, String> _profileBindings;
+@override@JsonKey() Map<String, String> get profileBindings {
+  if (_profileBindings is EqualUnmodifiableMapView) return _profileBindings;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_profileBindings);
 }
 
 
@@ -2553,16 +2561,16 @@ Map<String, dynamic> toJson() {
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScriptProps&&(identical(other.currentId, currentId) || other.currentId == currentId)&&const DeepCollectionEquality().equals(other._scripts, _scripts));
-}
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScriptProps&&(identical(other.currentId, currentId) || other.currentId == currentId)&&const DeepCollectionEquality().equals(other._scripts, _scripts)&&const DeepCollectionEquality().equals(other._profileBindings, _profileBindings));
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,currentId,const DeepCollectionEquality().hash(_scripts));
-
+int get hashCode => Object.hash(runtimeType,currentId,const DeepCollectionEquality().hash(_scripts),const DeepCollectionEquality().hash(_profileBindings));
 @override
 String toString() {
-  return 'ScriptProps(currentId: $currentId, scripts: $scripts)';
-}
+String toString() {
+  return 'ScriptProps(currentId: $currentId, scripts: $scripts, profileBindings: $profileBindings)';
 
 
 }
@@ -2572,9 +2580,9 @@ abstract mixin class _$ScriptPropsCopyWith<$Res> implements $ScriptPropsCopyWith
   factory _$ScriptPropsCopyWith(_ScriptProps value, $Res Function(_ScriptProps) _then) = __$ScriptPropsCopyWithImpl;
 @override @useResult
 $Res call({
- String? currentId, List<Script> scripts
+$Res call({
+ String? currentId, List<Script> scripts, Map<String, String> profileBindings
 });
-
 
 
 
@@ -2590,17 +2598,14 @@ class __$ScriptPropsCopyWithImpl<$Res>
 /// Create a copy of ScriptProps
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? currentId = freezed,Object? scripts = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? currentId = freezed,Object? scripts = null,Object? profileBindings = null,}) {
   return _then(_ScriptProps(
 currentId: freezed == currentId ? _self.currentId : currentId // ignore: cast_nullable_to_non_nullable
 as String?,scripts: null == scripts ? _self._scripts : scripts // ignore: cast_nullable_to_non_nullable
-as List<Script>,
+as List<Script>,profileBindings: null == profileBindings ? _self._profileBindings : profileBindings // ignore: cast_nullable_to_non_nullable
+as Map<String, String>,
   ));
 }
-
-
-}
-
-
 /// @nodoc
 mixin _$Config {
 

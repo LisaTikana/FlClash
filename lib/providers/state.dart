@@ -576,7 +576,9 @@ ColorScheme genColorScheme(
 VM4<String?, String?, Dns?, bool> needSetup(Ref ref) {
   final profileId = ref.watch(currentProfileIdProvider);
   final content = ref.watch(
-    scriptStateProvider.select((state) => state.currentScript?.content),
+    scriptStateProvider.select(
+      (state) => state.currentScriptForProfile(profileId)?.content,
+    ),
   );
   final overrideDns = ref.watch(overrideDnsProvider);
   final dns = overrideDns == true

@@ -248,6 +248,19 @@ class ScriptState extends _$ScriptState with AutoDisposeNotifierMixin {
   }
 
   void setId(String id) {
+    final profileId = globalState.config.currentProfileId;
+    if (profileId != null) {
+      final map = Map<String, String>.from(state.profileBindings);
+      final currentId = map[profileId];
+      if (currentId == id) {
+        map.remove(profileId);
+      } else {
+        map[profileId] = id;
+      }
+      value = state.copyWith(profileBindings: map);
+      return;
+    }
+
     value = state.copyWith(currentId: state.currentId != id ? id : null);
   }
 
@@ -258,7 +271,13 @@ class ScriptState extends _$ScriptState with AutoDisposeNotifierMixin {
       list.removeAt(index);
     }
     final nextId = id == state.currentId ? null : state.currentId;
-    state = state.copyWith(scripts: list, currentId: nextId);
+    final bindings = Map<String, String>.from(state.profileBindings)
+      ..removeWhere((_, value) => value == id);
+    state = state.copyWith(
+      scripts: list,
+      currentId: nextId,
+      profileBindings: bindings,
+    );
   }
 
   bool isExits(String label) {

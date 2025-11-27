@@ -217,6 +217,7 @@ abstract class ScriptProps with _$ScriptProps {
   const factory ScriptProps({
     String? currentId,
     @Default([]) List<Script> scripts,
+    @Default({}) Map<String, String> profileBindings,
   }) = _ScriptProps;
 
   factory ScriptProps.fromJson(Map<String, Object?> json) =>
@@ -224,7 +225,14 @@ abstract class ScriptProps with _$ScriptProps {
 }
 
 extension ScriptPropsExt on ScriptProps {
-  String? get realId {
+  String? getCurrentId(String? profileId) {
+    final profileScriptId =
+        profileId != null ? profileBindings[profileId] : currentId;
+    if (profileScriptId != null &&
+        scripts.indexWhere((script) => script.id == profileScriptId) != -1) {
+      return profileScriptId;
+    }
+
     final index = scripts.indexWhere((script) => script.id == currentId);
     if (index != -1) {
       return currentId;
@@ -232,8 +240,12 @@ extension ScriptPropsExt on ScriptProps {
     return null;
   }
 
-  Script? get currentScript {
-    final index = scripts.indexWhere((script) => script.id == currentId);
+  Script? currentScriptForProfile(String? profileId) {
+    final id = getCurrentId(profileId);
+    if (id == null) {
+      return null;
+    }
+    final index = scripts.indexWhere((script) => script.id == id);
     if (index != -1) {
       return scripts[index];
     }
